@@ -21,20 +21,27 @@
   -->
 
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:sv="/lib/sectioned_view" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
-  <l:layout title="${it.title}">
-    <st:include it="${it.parentObject}" page="sidepanel.jelly" />
-    <l:main-panel>
-      <h1>${%Dependency Graph}</h1>
-      <l:tabBar>
-            <l:tab name="graphviz" active="${true}" href="." />
-            <l:tab name="jsplumb" active="${false}"  href="./jsplumb" />
-      </l:tabBar>
-      <img src="graph.png" lazymap="graph.map"/>
-      <p>
-        <a href="graph.gv">${%Graph in graphviz format}</a>
-      </p><p>
-        <a href="legend.png">${%Legend}</a>
-      </p>
-    </l:main-panel>
-  </l:layout>
+  <j:choose>
+    <j:when test="${it.isGraphvizEnabled()}">
+	  <l:layout title="${it.title}">
+	    <st:include it="${it.parentObject}" page="sidepanel.jelly" />
+	    <l:main-panel>
+	      <h1>${%Dependency Graph}</h1>
+	      <l:tabBar>
+	            <l:tab name="graphviz" active="${true}" href="." />
+	            <l:tab name="jsplumb" active="${false}"  href="./jsplumb" />
+	      </l:tabBar>
+	      <img src="graph.png" lazymap="graph.map"/>
+	      <p>
+	        <a href="graph.gv">${%Graph in graphviz format}</a>
+	      </p><p>
+	        <a href="legend.png">${%Legend}</a>
+	      </p>
+	    </l:main-panel>
+	  </l:layout>
+    </j:when>
+    <j:otherwise>
+      <st:redirect url="./jsplumb" />
+    </j:otherwise>
+  </j:choose>
 </j:jelly>

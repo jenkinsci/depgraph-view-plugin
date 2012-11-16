@@ -47,6 +47,8 @@ public class DependencyGraphProperty extends AbstractDescribableImpl<DependencyG
     public static class DescriptorImpl extends Descriptor<DependencyGraphProperty> {
 
         private String dotExe;
+        
+        private boolean graphvizEnabled = true;
 
         public DescriptorImpl() {
             load();
@@ -54,7 +56,14 @@ public class DependencyGraphProperty extends AbstractDescribableImpl<DependencyG
 
         @Override
         public boolean configure( StaplerRequest req, JSONObject o ) {
-            dotExe = Util.fixEmptyAndTrim(o.getString("dotExe"));
+            final JSONObject go = o.optJSONObject("graphviz");
+            if(go != null){
+                dotExe = Util.fixEmptyAndTrim(go.optString("dotExe"));
+                graphvizEnabled = true;
+            }else{
+                dotExe = null;
+                graphvizEnabled = false;
+            }
             save();
 
             return true;
@@ -67,6 +76,10 @@ public class DependencyGraphProperty extends AbstractDescribableImpl<DependencyG
 
         public String getDotExe() {
             return dotExe;
+        }
+        
+        public boolean isGraphvizEnabled() {
+            return graphvizEnabled;
         }
 
         /**
@@ -82,6 +95,11 @@ public class DependencyGraphProperty extends AbstractDescribableImpl<DependencyG
 
         public synchronized void setDotExe(String dotPath) {
             this.dotExe = dotPath;
+            save();
+        }
+
+        public synchronized void setGraphvizEnabled(boolean graphvizEnabled) {
+            this.graphvizEnabled = graphvizEnabled;
             save();
         }
 

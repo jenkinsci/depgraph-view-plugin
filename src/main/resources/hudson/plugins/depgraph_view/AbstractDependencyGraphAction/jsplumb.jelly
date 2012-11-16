@@ -30,7 +30,9 @@
 			<h1>${%Dependency Graph}</h1>
 
 			<l:tabBar>
-				<l:tab name="graphviz" active="${false}" href="." />
+	            <j:if test="${it.isGraphvizEnabled()}">
+	                <l:tab name="graphviz" active="${false}" href="." />
+	            </j:if>			
 				<l:tab name="jsplumb" active="${true}" href="./jsplumb" />
 			</l:tabBar>
 
