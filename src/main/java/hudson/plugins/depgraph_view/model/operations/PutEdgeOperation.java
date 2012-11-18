@@ -39,7 +39,7 @@ public class PutEdgeOperation extends EdgeOperation {
             if (buildTrigger == null) {
                 source.getPublishersList().add(new BuildTrigger(target.getName(), true));
             } else {
-                final String childProjectsValue = buildTrigger.getChildProjectsValue() + ", " + target.getName();
+                final String childProjectsValue = normalizeChildProjectValue(buildTrigger.getChildProjectsValue() + ", " + target.getName());
                 source.getPublishersList().remove(buildTrigger);
                 source.getPublishersList().add(new BuildTrigger(childProjectsValue, true));
             }

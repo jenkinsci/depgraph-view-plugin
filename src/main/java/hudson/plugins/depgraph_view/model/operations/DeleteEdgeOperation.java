@@ -24,12 +24,13 @@ package hudson.plugins.depgraph_view.model.operations;
 
 import hudson.model.Result;
 import hudson.tasks.BuildTrigger;
-import jenkins.model.Jenkins;
 
 import java.io.IOException;
 
-public class DeleteEdgeOperation extends EdgeOperation {
+import jenkins.model.Jenkins;
 
+public class DeleteEdgeOperation extends EdgeOperation {
+    
     public DeleteEdgeOperation(String sourceJobName, String targetJobName) {
         super(sourceJobName, targetJobName);
     }
@@ -38,7 +39,7 @@ public class DeleteEdgeOperation extends EdgeOperation {
         if (source != null && target != null) {
             final BuildTrigger buildTrigger = (BuildTrigger) source.getPublishersList().get(BuildTrigger.class);
             if (buildTrigger != null) {
-                final String childProjectsValue = buildTrigger.getChildProjectsValue().replace(target.getName(), "");
+                final String childProjectsValue = normalizeChildProjectValue(buildTrigger.getChildProjectsValue().replace(target.getName(), ""));
                 final Result threshold = buildTrigger.getThreshold();
                 source.getPublishersList().remove(buildTrigger);
                 source.getPublishersList().add(new BuildTrigger(childProjectsValue, threshold));

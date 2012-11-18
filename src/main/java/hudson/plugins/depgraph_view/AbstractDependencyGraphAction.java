@@ -41,6 +41,8 @@ import hudson.plugins.depgraph_view.model.operations.DeleteEdgeOperation;
 import hudson.plugins.depgraph_view.model.operations.PutEdgeOperation;
 import hudson.util.LogTaskListener;
 import jenkins.model.Jenkins;
+import jenkins.model.ModelObjectWithContextMenu.ContextMenu;
+
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 
@@ -64,6 +66,13 @@ public abstract class AbstractDependencyGraphAction implements Action {
     private final Logger LOGGER = Logger.getLogger(Logger.class.getName());
 
     private static final Pattern EDGE_PATTERN = Pattern.compile("/(.*)/(.*[^/])(.*)");
+    
+    /**
+     * This method is called via AJAX to obtain the context menu for this model object, but we don't have one...
+     */
+    public ContextMenu doContextMenu(StaplerRequest request, StaplerResponse response) throws Exception {
+        return new ContextMenu();
+    }
 
     public void doEdge(StaplerRequest req, StaplerResponse rsp) throws IOException, ServletException, InterruptedException {
         String path = req.getRestOfPath();

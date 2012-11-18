@@ -1,7 +1,12 @@
 ;
 (function() {
+	function escapeId(id) {
+		// replace all characters except numbers and letters
+		return id.replace(/[^a-zA-Z0-9]/g,'-');
+	}
+	
     function getJobDiv(jobName) {
-        return jQuery('#' + jobName);
+        return jQuery('#' + escapeId(jobName));
     }
 
     window.depview = {
@@ -47,7 +52,6 @@
 				]
 
 			});
-
 			jQuery.getJSON('graph.json', function(data) {
 
 				var top = 3;
@@ -60,7 +64,8 @@
                     jQuery.each(cluster.nodes, function(i,node) {
                         jQuery('<div><div class="ep"/><a href="' + node.url + '">' + node.name + '</a></div>').
                             addClass('window').
-                            attr('id', node.name).
+                            attr('id', escapeId(node.name)).
+                            attr('data-jobname', node.name).
                             css('top', node.y + top).
                             css('left', node.x + xOverall).
                             appendTo(window.depview.paper);
@@ -94,9 +99,11 @@
 						connection = jsPlumb.connect({ source : from, target : to, scope: edge["type"], paintStyle:{lineWidth : 2, strokeStyle: window.depview.colordep}});
 						// only allow deletion of "dep" connections
 						connection.bind("click", function(conn) {
-							if(confirm('delete connection: '+ conn.sourceId +" -> "+conn.targetId+'?')){
+							var sourceJobName = conn.source.attr('data-jobname');
+							var targtJobName = conn.target.attr('data-jobname')
+							if(confirm('delete connection: '+ sourceJobName +" -> "+ targtJobName +'?')){
 								jQuery.ajax({
-									url : 'edge/' + conn.sourceId + '/'	+ conn.targetId,
+									url : encodeURI('edge/' + sourceJobName + '/'	+ targtJobName),
 									type : 'DELETE',
 									success : function(response) {
 										jsPlumb.detach(conn);
@@ -112,7 +119,7 @@
 
 				jsPlumb.bind("jsPlumbConnection", function(info) {
 					jQuery.ajax({
-						   url: 'edge/'+info.sourceId +'/'+info.targetId,
+						   url: encodeURI('edge/'+info.source.attr('data-jobname') +'/'+info.target.attr('data-jobname')),
 						   type: 'PUT',
 						   success: function( response ) {
 //							   alert('Load was performed.');
@@ -123,9 +130,11 @@
 					});
 					// allow deletion of newly created connection
 					info.connection.bind("click", function(conn) {
-						if(confirm('delete connection: '+ conn.sourceId +" -> "+conn.targetId+'?')){
+						var sourceJobName = conn.source.attr('data-jobname');
+						var targtJobName = conn.target.attr('data-jobname');
+						if(confirm('delete connection: '+ sourceJobName +" -> "+ targtJobName +'?')){
 							jQuery.ajax({
-								url : 'edge/' + conn.sourceId + '/'	+ conn.targetId,
+								url : encodeURI('edge/' + sourceJobName + '/'	+ targtJobName),
 								type : 'DELETE',
 								success : function(response) {
 									jsPlumb.detach(conn);

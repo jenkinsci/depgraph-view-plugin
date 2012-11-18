@@ -23,18 +23,30 @@
 package hudson.plugins.depgraph_view.model.operations;
 
 import hudson.model.AbstractProject;
-import jenkins.model.Jenkins;
 
 import java.io.IOException;
+
+import jenkins.model.Jenkins;
 
 public abstract class EdgeOperation {
     protected final AbstractProject<?, ?> source;
     protected final AbstractProject<?, ?> target;
 
     public EdgeOperation(String sourceJobName, String targetJobName) {
-        this.source = Jenkins.getInstance().getItemByFullName(sourceJobName, AbstractProject.class);
+        this.source = Jenkins.getInstance().getItemByFullName(sourceJobName.trim(), AbstractProject.class);
         this.target = Jenkins.getInstance().getItemByFullName(targetJobName, AbstractProject.class);
     }
-
+    
+    /**
+     * Removes double commas and also trailing an leading commas.
+     * @param actualValue the actual value to be normalized
+     * @return the value with no unrequired commas
+     */
+    public static String normalizeChildProjectValue(String actualValue){
+        actualValue = actualValue.replaceAll("(,[ ]*,)", ", ");
+        actualValue = actualValue.replaceAll("(^,|,$)", "");
+        return actualValue.trim();
+    }
+    
     public abstract void perform() throws IOException;
 }
