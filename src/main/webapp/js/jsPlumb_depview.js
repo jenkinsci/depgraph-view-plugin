@@ -15,7 +15,6 @@
         paper: jQuery("#paper"),
         colordep: '#FF0000', // red
         colorcopy: '#32CD32', // green
-        colordepnew: '#FFFF00', // yellow
         init : function() {
             jsPlumb.importDefaults({
                 Connector : ["StateMachine", { curviness: 10 }],// Straight, Flowchart, Straight, Bezier
@@ -37,10 +36,11 @@
                     radius : 6
                 } ] ],
 
-                // connector line 2px
+                // def for new connector (drag n' drop) 
+                // - line 2px
                 PaintStyle : {
                     lineWidth : 2,
-                    strokeStyle : window.depview.colordepnew,
+                    strokeStyle : window.depview.colordep,
                     joinstyle:"round"},
 
                 // the overlays to decorate each connection with. note that the
