@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c) 2010 Stefan Wolf
+  ~ Copyright (c) 2012 Dominik Bartholdi
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -20,15 +20,6 @@
   ~ THE SOFTWARE.
   -->
 
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-  <f:section title="${%Dependency Graph Viewer Configuration}">
-    <f:optionalBlock name="graphviz" title="${%Enable rendering with graphviz}" checked="${descriptor.isGraphvizEnabled()}">
-	    <f:entry title="${%Dot Executable Path}" field="dotExe">
-	      <f:textbox value="${descriptor.getDotExe()}"/>
-	    </f:entry>
-    </f:optionalBlock>
-    <f:entry field="editFunctionInJSViewEnabled" title="${%editFunctionInJSViewEnabled}">
-        <f:checkbox checked="${instance.isEditFunctionInJSViewEnabled()}" />
-    </f:entry>    
-  </f:section>
-</j:jelly>
+<div>
+  The graph rendered with jsplumb also allows creation and deletion of dependencies between the jobs via drag and drop. This functionality might not be requested in every setup, therefore one is able to disable it. 
+</div>

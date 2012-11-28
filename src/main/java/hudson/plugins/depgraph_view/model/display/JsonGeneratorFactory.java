@@ -23,6 +23,9 @@
 package hudson.plugins.depgraph_view.model.display;
 
 import com.google.common.collect.ListMultimap;
+
+import hudson.model.Hudson;
+import hudson.plugins.depgraph_view.DependencyGraphProperty.DescriptorImpl;
 import hudson.plugins.depgraph_view.model.graph.DependencyGraph;
 import hudson.plugins.depgraph_view.model.graph.ProjectNode;
 
@@ -32,7 +35,8 @@ import hudson.plugins.depgraph_view.model.graph.ProjectNode;
 public class JsonGeneratorFactory extends GeneratorFactory {
     @Override
     public AbstractGraphStringGenerator newGenerator(DependencyGraph graph, ListMultimap<ProjectNode, ProjectNode> subprojects) {
-        return new JsonStringGenerator(graph, subprojects);
+        final boolean editFunctionInJSViewEnabled = Hudson.getInstance().getDescriptorByType(DescriptorImpl.class).isEditFunctionInJSViewEnabled();
+        return new JsonStringGenerator(graph, subprojects, editFunctionInJSViewEnabled);
     }
 
     @Override

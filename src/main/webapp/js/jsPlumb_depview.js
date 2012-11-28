@@ -60,6 +60,7 @@
                 var space = 150;
                 var xOverall = 0;
 
+                var isEditFunctionInJSViewEnabled = data["isEditFunctionInJSViewEnabled"];
                 var clusters = data["clusters"];
                 // iterate clusters
                 jQuery.each(clusters, function(i, cluster) {
@@ -78,14 +79,18 @@
                 // definitions for drag/drop connections
                 jQuery(".ep").each(function(idx, current) {
                     var p = jQuery(current).parent()
-                    jsPlumb.makeSource(current, {
-                        anchor : "Continuous",
-                        parent: p
-                    });
+                    if(isEditFunctionInJSViewEnabled) {
+	                    jsPlumb.makeSource(current, {
+	                        anchor : "Continuous",
+	                        parent: p
+	                    });
+                    }
                 })
-                jsPlumb.makeTarget(jsPlumb.getSelector('.window'), {
-                    anchor : "Continuous"
-                });
+                if(isEditFunctionInJSViewEnabled) {
+	                jsPlumb.makeTarget(jsPlumb.getSelector('.window'), {
+	                    anchor : "Continuous"
+	                });
+                }
 
                 var edges = data["edges"];
                 jQuery.each(edges, function(i, edge) {
@@ -100,55 +105,58 @@
                     }else{
                         connection = jsPlumb.connect({ source : from, target : to, scope: edge["type"], paintStyle:{lineWidth : 2, strokeStyle: window.depview.colordep}});
                         // only allow deletion of "dep" connections
-                        connection.bind("click", function(conn) {
-                            var sourceJobName = conn.source.attr('data-jobname');
-                            var targetJobName = conn.target.attr('data-jobname')
-                            if(confirm('delete connection: '+ sourceJobName +" -> "+ targetJobName +'?')){
-                                jQuery.ajax({
-                                    url : encodeURI('edge/' + sourceJobName + '/'    + targetJobName),
-                                    type : 'DELETE',
-                                    success : function(response) {
-                                        jsPlumb.detach(conn);
-                                    },
-                                    error: function (request, status, error) {
-                                        alert(status+": "+error);
-                                    }
-                                });
-                            }
-                        });
+                        if(isEditFunctionInJSViewEnabled) {
+	                        connection.bind("click", function(conn) {
+	                            var sourceJobName = conn.source.attr('data-jobname');
+	                            var targetJobName = conn.target.attr('data-jobname')
+	                            if(confirm('delete connection: '+ sourceJobName +" -> "+ targetJobName +'?')){
+	                                jQuery.ajax({
+	                                    url : encodeURI('edge/' + sourceJobName + '/'    + targetJobName),
+	                                    type : 'DELETE',
+	                                    success : function(response) {
+	                                        jsPlumb.detach(conn);
+	                                    },
+	                                    error: function (request, status, error) {
+	                                        alert(status+": "+error);
+	                                    }
+	                                });
+	                            }
+	                        });
+                        }
                     }
                 });
 
-                jsPlumb.bind("jsPlumbConnection", function(info) {
-                    jQuery.ajax({
-                           url: encodeURI('edge/'+info.source.attr('data-jobname') +'/'+info.target.attr('data-jobname')),
-                           type: 'PUT',
-                           success: function( response ) {
-//                               alert('Load was performed.');
-                           },
-                           error: function (request, status, error) {
-                                alert(request.responseText);
-                           }
-                    });
-                    // allow deletion of newly created connection
-                    info.connection.bind("click", function(conn) {
-                        var sourceJobName = conn.source.attr('data-jobname');
-                        var targetJobName = conn.target.attr('data-jobname');
-                        if(confirm('delete connection: '+ sourceJobName +" -> "+ targetJobName +'?')){
-                            jQuery.ajax({
-                                url : encodeURI('edge/' + sourceJobName + '/'    + targetJobName),
-                                type : 'DELETE',
-                                success : function(response) {
-                                    jsPlumb.detach(conn);
-                                },
-                                error: function (request, status, error) {
-                                    alert(request.responseText);
-                                }
-                            });
-                        }
-                    });
-                });
-
+                if(isEditFunctionInJSViewEnabled) {
+	                jsPlumb.bind("jsPlumbConnection", function(info) {
+	                    jQuery.ajax({
+	                           url: encodeURI('edge/'+info.source.attr('data-jobname') +'/'+info.target.attr('data-jobname')),
+	                           type: 'PUT',
+	                           success: function( response ) {
+//                                 alert('Load was performed.');
+	                           },
+	                           error: function (request, status, error) {
+	                                alert(request.responseText);
+	                           }
+	                    });
+	                    // allow deletion of newly created connection
+	                    info.connection.bind("click", function(conn) {
+	                        var sourceJobName = conn.source.attr('data-jobname');
+	                        var targetJobName = conn.target.attr('data-jobname');
+	                        if(confirm('delete connection: '+ sourceJobName +" -> "+ targetJobName +'?')){
+	                            jQuery.ajax({
+	                                url : encodeURI('edge/' + sourceJobName + '/'    + targetJobName),
+	                                type : 'DELETE',
+	                                success : function(response) {
+	                                    jsPlumb.detach(conn);
+	                                },
+	                                error: function (request, status, error) {
+	                                    alert(request.responseText);
+	                                }
+	                            });
+	                        }
+	                    });
+	                });
+                }
 
                 // make all the window divs draggable
                 jsPlumb.draggable(jsPlumb.getSelector(".window"));

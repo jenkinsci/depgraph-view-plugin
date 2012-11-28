@@ -49,6 +49,8 @@ public class DependencyGraphProperty extends AbstractDescribableImpl<DependencyG
         private String dotExe;
 
         private boolean graphvizEnabled = true;
+        
+        private boolean editFunctionInJSViewEnabled = true;
 
         public DescriptorImpl() {
             load();
@@ -64,6 +66,8 @@ public class DependencyGraphProperty extends AbstractDescribableImpl<DependencyG
                 dotExe = null;
                 graphvizEnabled = false;
             }
+            editFunctionInJSViewEnabled  = o.optBoolean("editFunctionInJSViewEnabled");
+            
             save();
 
             return true;
@@ -80,6 +84,10 @@ public class DependencyGraphProperty extends AbstractDescribableImpl<DependencyG
 
         public boolean isGraphvizEnabled() {
             return graphvizEnabled;
+        }
+        
+        public boolean isEditFunctionInJSViewEnabled() {
+            return editFunctionInJSViewEnabled;
         }
 
         /**
