@@ -24,7 +24,7 @@
   <j:choose>
     <j:when test="${it.isGraphvizEnabled()}">
 	  <l:layout title="${it.title}">
-	    <st:include it="${it.parentObject}" page="sidepanel.jelly" />
+	    <st:include page="sidepanel.jelly" />
 	    <l:main-panel>
 	      <h1>${%Dependency Graph}</h1>
 	      <l:tabBar>

@@ -25,7 +25,7 @@
   <j:new var="h2" className="hudson.Functions" /><!-- instead of JSP functions -->
   <link rel="stylesheet" href="${h2.inferHudsonURL(context.currentRequest)}/plugin/depgraph-view/css/depview.css"></link>
 	<l:layout title="${it.title}">
-		<st:include it="${it.parentObject}" page="sidepanel.jelly" />
+		<st:include page="sidepanel.jelly" />
 		<l:main-panel>
 			<h1>${%Dependency Graph}</h1>
 
