@@ -1,0 +1,24 @@
+#!/bin/sh
+
+branch_name="$(git symbolic-ref HEAD 2>/dev/null)" ||
+    branch_name="(unnamed branch)"     # detached HEAD
+
+branch_name=${branch_name##refs/heads/}
+if [ "$branch_name" == "master" ]
+   then
+   # Add new files to svn
+   echo "Adding new files to svn..."
+   for file in $(git diff --name-only --diff-filter=A origin/master HEAD~1); do
+       svn add $file
+       echo $file
+   done
+
+   echo "Commiting to svn..."
+
+   last_commit_ms=$(git log -1 --pretty=%B)
+
+   # Use the same message as they used on git
+   svn commit -m "$last_commit_ms"
+fi
+
+    
