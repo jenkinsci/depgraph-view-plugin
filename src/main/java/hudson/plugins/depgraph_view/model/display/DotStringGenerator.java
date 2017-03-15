@@ -136,9 +136,9 @@ public class DotStringGenerator extends AbstractDotStringGenerator {
         return builder.toString();
     }
 
-    private String getProjectRow(ProjectNode project, String... extraColumnProperties) {
+    private String getProjectRow(ProjectNode project, String... extraColumnProperties) {    	
         return String.format("<tr><td align=\"center\" href=%s %s>%s</td></tr>", getEscapedProjectUrl(project), Joiner.on(" ").join(extraColumnProperties),
-                project.getName());
+        		project.getName().replaceAll("&", "&amp;"));
     }
 
     private String getEscapedProjectUrl(ProjectNode proj) {
