@@ -27,7 +27,7 @@ import com.google.common.collect.ListMultimap;
 
 import hudson.plugins.depgraph_view.model.graph.project.SubProjectProvider;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Collection;
 import java.util.Set;
 

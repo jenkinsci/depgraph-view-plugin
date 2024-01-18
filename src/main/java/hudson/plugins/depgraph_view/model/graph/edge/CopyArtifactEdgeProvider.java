@@ -26,7 +26,7 @@ import static hudson.plugins.depgraph_view.model.graph.ProjectNode.node;
 
 import java.util.Set;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import com.google.common.collect.Sets;
 

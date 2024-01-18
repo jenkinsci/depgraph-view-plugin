@@ -25,7 +25,7 @@ package hudson.plugins.depgraph_view.model.graph.edge;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import hudson.model.Items;
 import hudson.model.Job;

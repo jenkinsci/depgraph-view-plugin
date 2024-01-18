@@ -27,7 +27,7 @@ import hudson.model.DependencyGraph;
 import hudson.model.Job;
 import jenkins.model.Jenkins;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 

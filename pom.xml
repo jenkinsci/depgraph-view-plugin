@@ -26,15 +26,13 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>4.40</version>
+        <version>4.77</version>
         <relativePath />
     </parent>
     <properties>
         <revision>1.0.6</revision>
         <changelist>-SNAPSHOT</changelist>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <jenkins.version>2.332.1</jenkins.version>
+        <jenkins.version>2.414.3</jenkins.version>
         <gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
     </properties>
     <groupId>org.jenkins-ci.plugins</groupId>
@@ -66,8 +64,8 @@
         <dependencies>
             <dependency>
                 <groupId>io.jenkins.tools.bom</groupId>
-                <artifactId>bom-2.332.x</artifactId>
-                <version>1342.v729ca_3818e88</version>
+                <artifactId>bom-2.414.x</artifactId>
+                <version>2718.v7e8a_d43b_3f0b_</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -78,13 +76,11 @@
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>copyartifact</artifactId>
-            <version>1.46.2</version>
             <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>parameterized-trigger</artifactId>
-            <version>2.32</version>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -115,7 +111,6 @@
         <dependency>
           <groupId>org.jenkins-ci.plugins</groupId>
           <artifactId>pipeline-maven</artifactId>
-          <version>3.10.0</version>
           <optional>true</optional>
         </dependency>
         <dependency>
