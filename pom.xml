@@ -26,13 +26,15 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>4.77</version>
+        <version>4.88</version>
         <relativePath />
     </parent>
     <properties>
         <revision>1.0.6</revision>
         <changelist>-SNAPSHOT</changelist>
-        <jenkins.version>2.414.3</jenkins.version>
+        <!-- https://www.jenkins.io/doc/developer/plugin-development/choosing-jenkins-baseline/ -->
+        <jenkins.baseline>2.452</jenkins.baseline>
+        <jenkins.version>${jenkins.baseline}.4</jenkins.version>
         <gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
     </properties>
     <groupId>org.jenkins-ci.plugins</groupId>
@@ -64,8 +66,8 @@
         <dependencies>
             <dependency>
                 <groupId>io.jenkins.tools.bom</groupId>
-                <artifactId>bom-2.414.x</artifactId>
-                <version>2718.v7e8a_d43b_3f0b_</version>
+                <artifactId>bom-${jenkins.baseline}.x</artifactId>
+                <version>3875.v1df09947cde6</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
