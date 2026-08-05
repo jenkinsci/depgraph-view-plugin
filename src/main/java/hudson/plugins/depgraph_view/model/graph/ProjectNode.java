@@ -22,7 +22,7 @@
 
 package hudson.plugins.depgraph_view.model.graph;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 
 import com.google.common.base.Preconditions;
 import hudson.model.Job;
@@ -43,7 +43,7 @@ public class ProjectNode {
     }
 
     public String getName() {
-        return StringEscapeUtils.escapeHtml(project.getFullDisplayName());
+        return StringEscapeUtils.escapeHtml4(project.getFullDisplayName());
     }
 
     public Job<?, ?> getProject() {
