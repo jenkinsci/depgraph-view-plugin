@@ -177,8 +177,11 @@ public class DotStringGenerator extends AbstractDotStringGenerator {
     private String projectToNodeString(ProjectNode proj) {
         return escapeString(proj.getName()) +
                 " [label=<" + stripFunction.apply(proj.getName()) + "> " +
-        		" tooltip=" + escapeString(proj.getName()) +
-                " href=" + getEscapedProjectUrl(proj) + "]";
+                " href=" + getEscapedProjectUrl(proj) + 
+                " style=filled " +
+                proj.getBuildingShape() +
+                " tooltip=" + escapeString(proj.getToolTip()) +
+                " fillcolor=" + escapeString(proj.getFill()) + "]";
     }
 
     private String projectToNodeString(ProjectNode proj, List<ProjectNode> subprojects) {

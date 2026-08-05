@@ -42,8 +42,40 @@ public class ProjectNode {
         this.project = project;
     }
 
+    public String getBuildingShape() {
+        if (project.isInQueue()) {
+            return "shape=doubleoctagon";
+        }
+        else if (project.isBuilding()) {
+            return "shape=tripleoctagon";
+        }
+        return "";
+    }
+    public String getFill() {
+        return project.getIconColor().getHtmlBaseColor();
+    }
+
     public String getName() {
         return StringEscapeUtils.escapeHtml4(project.getFullDisplayName());
+    }
+
+    public String getToolTip() {
+        if (project.getLastBuild() != null) {
+            StringBuilder sb = new StringBuilder();
+
+            if (project.getLastCompletedBuild() != null) {
+                sb.append("Last duration: ");
+                sb.append(project.getLastCompletedBuild().getDurationString());
+                sb.append(" . ");
+            }
+            if (project.isBuilding()) {
+                sb.append("Current duration: ");
+                sb.append(project.getLastBuild().getDurationString());
+            }
+
+            return sb.toString();
+        }
+        return getName();
     }
 
     public Job<?, ?> getProject() {
