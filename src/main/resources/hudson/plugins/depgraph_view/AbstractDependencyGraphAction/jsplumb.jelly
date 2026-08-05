@@ -59,11 +59,8 @@
 			<script type='text/javascript' src='${rootURL}/plugin/depgraph-view/js/jquery.jsPlumb-1.4.1-all-min.js'></script>
 			<script type="text/javascript" src="${rootURL}/plugin/depgraph-view/js/jsPlumb_depview.js"></script>
 
-			<script type="text/javascript">
-			window.depview.editEnabled=${it.isEditFunctionInJSViewEnabled()};
-			window.depview.projectNameStripRegex=/${it.getProjectNameStripRegex()}/g;
-			window.depview.projectNameStripRegexGroup=${it.getProjectNameStripRegexGroup()};
-			</script>
+			<span class="jsplumb-config" data-edit-enabled="${it.isEditFunctionInJSViewEnabled()}" data-name-strip-regex="${it.getProjectNameStripRegex()}" data-regex-group="${it.getProjectNameStripRegexGroup()}" />
+			<st:adjunct includes="hudson.plugins.depgraph_view.AbstractDependencyGraphAction.jsplumb-config" />
 
 		</l:main-panel>
 	</l:layout>
